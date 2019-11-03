@@ -1,0 +1,16 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build the Docker image
+      env: # Or as an environment variable
+         DOCKER_TOKEN: ${{ secrets. DOCKER_TOKEN }}
+      run: docker build . --tag zakant/alpine-texlive && docker login --username zakant --password-stdin < echo $DOCKER_TOKEN && docker push
